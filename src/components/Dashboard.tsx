@@ -21,10 +21,6 @@ export default class Dashboard extends React.PureComponent<{}, IState> {
       sessionActive: false,
       users: [
         { id: "1", name: "Cameron Pavey", locked: false },
-        { id: "1", name: "Cameron Pavey", locked: false },
-        { id: "1", name: "Cameron Pavey", locked: false },
-        { id: "1", name: "Cameron Pavey", locked: false },
-        { id: "1", name: "Cameron Pavey", locked: false },
         { id: "2", name: "John Doe", locked: false }
       ]
     };
@@ -37,16 +33,17 @@ export default class Dashboard extends React.PureComponent<{}, IState> {
           <div className="row h-full">
             {/* Sidebar */}
             <div className="col-sm-5 col-md-4 h-full">
-              <div className="bg-white rounded shadow p-4 h-full flex-col flex">
+              <div className="bg-white rounded shadow-lg p-4 h-full flex-col flex">
                 <div className="border-b pb-4 mb-4">
                   <input
                     placeholder="Enter the next issue"
                     className={`border inline-block w-5/6 p-3 ${
                       this.state.sessionActive ? "bg-grey-lighter" : null
                     }`}
-                    onChangeCapture={this.setTopic}
+                    onChange={this.setTopic}
                     value={this.state.currentTopic}
                     disabled={this.state.sessionActive}
+                    onKeyDown={this.HandleKeydown}
                   />
                   <button
                     className={`w-1/6 p-3 border text-white ${
@@ -81,7 +78,7 @@ export default class Dashboard extends React.PureComponent<{}, IState> {
                       disabled={!this.state.sessionActive}
                       onClick={this.endSession}
                     >
-                      Close Submission
+                      Finish this round
                     </button>
                   </div>
                 </div>
@@ -89,7 +86,7 @@ export default class Dashboard extends React.PureComponent<{}, IState> {
             </div>
             {/* Results */}
             <div className="col-sm-7 col-md-8">
-              <div className="bg-white rounded shadow p-4 h-full">
+              <div className="bg-white rounded shadow-lg p-4 h-full">
                 <div>{/* <Bar options={options} data={data} /> */}</div>
                 <div className="border-t my-2 py-2">
                   <table className="w-full h-full text-center border">
@@ -123,6 +120,12 @@ export default class Dashboard extends React.PureComponent<{}, IState> {
     );
   }
 
+  private HandleKeydown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      this.startSession();
+    }
+  };
+
   private setTopic = (newTopic: any) => {
     this.setState({
       currentTopic: newTopic.target.value
@@ -137,6 +140,7 @@ export default class Dashboard extends React.PureComponent<{}, IState> {
 
   private endSession = () => {
     this.setState({
+      currentTopic: "",
       sessionActive: false
     });
   };

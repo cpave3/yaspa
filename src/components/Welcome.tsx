@@ -1,38 +1,23 @@
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
+import { adjs, nouns } from "../files/words";
 
-const adjs = [
-  "fast",
-  "slow",
-  "boring",
-  "shiny",
-  "pointless",
-  "complex",
-  "serious",
-  "pitiful",
-  "verbose",
-  "awful",
-  "disappointing"
-];
-const nouns = [
-  "emu",
-  "wombat",
-  "koala",
-  "engineer",
-  "goat",
-  "seraph",
-  "cantaloupe",
-  "todd"
-];
+interface IErrors {
+  roomName: boolean;
+}
 
 interface IState {
   roomName: string;
   password: string;
+  errors: IErrors;
 }
 
 export default class Welcome extends React.PureComponent<{}, IState> {
   public state = {
+    errors: {
+      roomName: false
+    },
     password: "",
     roomName: ""
   };
@@ -50,7 +35,9 @@ export default class Welcome extends React.PureComponent<{}, IState> {
             <div>
               <input
                 placeholder="Enter a room name"
-                className="p-4 bg-grey-lightest border"
+                className={`p-4 bg-grey-lightest border ${
+                  this.state.errors.roomName ? "border-red" : null
+                }`}
                 value={this.state.roomName}
                 onChange={this.handleNameChange}
               />
@@ -70,12 +57,25 @@ export default class Welcome extends React.PureComponent<{}, IState> {
               autoComplete="off"
               autoSave="off"
             />
-            <button className="p-4 bg-green text-white">Let's Go!</button>
+            <button
+              className="p-4 bg-green text-white"
+              onClick={this.handleSubmitClick}
+            >
+              Let's Go!
+            </button>
           </div>
         </section>
       </div>
     );
   }
+
+  private handleSubmitClick = () => {
+    const { roomName } = this.state;
+    const errorRoomName = !(roomName.length > 0);
+    this.setState({
+      errors: { ...this.state.errors, roomName: errorRoomName }
+    });
+  };
 
   private randomName = () => {
     const noun = nouns[Math.floor(Math.random() * nouns.length)];
@@ -86,11 +86,11 @@ export default class Welcome extends React.PureComponent<{}, IState> {
   private handlePasswordChange = (event: any) => {
     const password = event.target.value;
     this.setState({ password });
-  }
+  };
 
   private handleNameChange = (event: any) => {
     const rawName = event.target.value;
-    const roomName = rawName.replace(/\s+/g, '-').toLowerCase();
+    const roomName = rawName.replace(/\s+/g, "-").toLowerCase();
     this.setState({ roomName });
-  }
+  };
 }
