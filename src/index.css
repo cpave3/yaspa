@@ -6089,8 +6089,15 @@ table {
 .z-auto {
   z-index: auto;
 }
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.css');
+@import url('https://fonts.googleapis.com/css?family=Lobster');
 
 /* Custom CSS */
+
+.font-lobster {
+  font-family: 'Lobster', cursive;
+}
 
 @media (min-width: 576px) {
   .sm\:list-reset {
