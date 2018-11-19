@@ -1,6 +1,7 @@
 import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
+import { RouteComponentProps } from 'react-router-dom';
 import { adjs, nouns } from "../files/words";
 
 interface IErrors {
@@ -13,7 +14,7 @@ interface IState {
   errors: IErrors;
 }
 
-export default class Welcome extends React.PureComponent<{}, IState> {
+export default class Welcome extends React.PureComponent<RouteComponentProps, IState> {
   public state = {
     errors: {
       roomName: false
@@ -75,6 +76,9 @@ export default class Welcome extends React.PureComponent<{}, IState> {
     this.setState({
       errors: { ...this.state.errors, roomName: errorRoomName }
     });
+    if (!errorRoomName) {
+      this.props.history.push(`/d/${roomName}`)
+    }
   };
 
   private randomName = () => {
