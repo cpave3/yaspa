@@ -28,7 +28,7 @@ export default class Dashboard extends React.PureComponent<{}, IState> {
 
   public render() {
     return (
-      <section className="p-4 bg-grey-light h-screen flex-row flex content-center items-center justify-center">
+      <section className="p-4 bg-blue h-screen flex-row flex content-center items-center justify-center">
         <div className="w-full h-full">
           <div className="row h-full">
             {/* Sidebar */}

@@ -1,5 +1,5 @@
 export const adjs = [
-  "fast",
+  "quick",
   "slow",
   "boring",
   "shiny",
@@ -9,7 +9,8 @@ export const adjs = [
   "pitiful",
   "verbose",
   "awful",
-  "disappointing"
+  "lacking",
+  "cursed"
 ];
 export const nouns = [
   "emu",
@@ -19,5 +20,8 @@ export const nouns = [
   "goat",
   "seraph",
   "cantaloupe",
-  "todd"
+  "todd",
+  "pickle",
+  "bottle",
+  "silver"
 ];

@@ -1,7 +1,7 @@
-import { faSyncAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from "react-router-dom";
 import { adjs, nouns } from "../files/words";
 
 interface IErrors {
@@ -12,28 +12,36 @@ interface IState {
   roomName: string;
   password: string;
   errors: IErrors;
+  loading: boolean;
 }
 
-export default class Welcome extends React.PureComponent<RouteComponentProps, IState> {
+interface IProps extends RouteComponentProps {
+  loading: boolean;
+  errors: object;
+  checkRoom: (roomName: string, password: string) => void; 
+}
+
+export default class Welcome extends React.PureComponent<IProps, IState> {
   public state = {
     errors: {
       roomName: false
     },
+    loading: false,
     password: "",
     roomName: ""
   };
 
   public render() {
     return (
-      <div className="bg-grey flex flex-col h-screen content-center">
+      <div className="bg-blue flex flex-col h-screen content-center">
         <header className="w-full flex-row">
-          <h1 className="font-serif p-4 text-center text-grey-dark font-lobster">
+          <h1 className="font-serif p-4 text-center text-blue-dark font-lobster">
             Yaspa
           </h1>
         </header>
         <section className="flex-1 flex items-center justify-center">
-          <div className="bg-grey-lighter rounded-lg shadow-lg flex flex-col justify-between p-8 h-64">
-            <div>
+          <div className="bg-grey-lighter rounded-lg shadow-lg flex flex-col justify-between p-8 pb-4 min-h-64">
+            <div className="my-2">
               <input
                 placeholder="Enter a room name"
                 className={`p-4 bg-grey-lightest border ${
@@ -51,7 +59,7 @@ export default class Welcome extends React.PureComponent<RouteComponentProps, IS
             </div>
             <input
               placeholder="Password (optional)"
-              className="p-4 bg-grey-lightest border"
+              className="p-4 bg-grey-lightest border my-2"
               value={this.state.password}
               onChange={this.handlePasswordChange}
               type="password"
@@ -59,11 +67,18 @@ export default class Welcome extends React.PureComponent<RouteComponentProps, IS
               autoSave="off"
             />
             <button
-              className="p-4 bg-green text-white"
+              className="p-4 bg-green text-white my-2"
               onClick={this.handleSubmitClick}
             >
-              Let's Go!
+              {!this.props.loading ? (
+                "Let's Go!"
+              ) : (
+                <FontAwesomeIcon icon={faSpinner} spin={true} />
+              )}
             </button>
+            <Link title="join room" to="/join" className="text-center my-2">
+              or Join an existing room
+            </Link>
           </div>
         </section>
       </div>
@@ -71,13 +86,14 @@ export default class Welcome extends React.PureComponent<RouteComponentProps, IS
   }
 
   private handleSubmitClick = () => {
-    const { roomName } = this.state;
+    const { roomName, password } = this.state;
     const errorRoomName = !(roomName.length > 0);
     this.setState({
       errors: { ...this.state.errors, roomName: errorRoomName }
     });
     if (!errorRoomName) {
-      this.props.history.push(`/d/${roomName}`)
+      this.props.checkRoom(roomName, password);
+      // this.props.history.push(`/room/${roomName}`);
     }
   };
 
