@@ -7,7 +7,8 @@ import IAction from "../interfaces/reducerAction";
 
 const mapStateToProps = (state: any) => ({
   errors: state.room.errors,
-  loading: state.room.loading
+  loading: state.room.loading,
+  roomName: state.room.roomName
 });
 
 const mapDispatchToProps = (dispatch: (action: IAction) => void) => ({

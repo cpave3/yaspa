@@ -1,7 +1,7 @@
 import { faSpinner, faSyncAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
+import { Link, Redirect, RouteComponentProps } from "react-router-dom";
 import { adjs, nouns } from "../files/words";
 
 interface IErrors {
@@ -18,6 +18,7 @@ interface IState {
 interface IProps extends RouteComponentProps {
   loading: boolean;
   errors: object;
+  roomName: string;
   checkRoom: (roomName: string, password: string) => void; 
 }
 
@@ -34,6 +35,7 @@ export default class Welcome extends React.PureComponent<IProps, IState> {
   public render() {
     return (
       <div className="bg-blue flex flex-col h-screen content-center">
+        { this.props.roomName !== '' ? <Redirect to={`/room/${this.props.roomName}`} /> : null }
         <header className="w-full flex-row">
           <h1 className="font-serif p-4 text-center text-blue-dark font-lobster">
             Yaspa
