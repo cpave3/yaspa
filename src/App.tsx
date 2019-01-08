@@ -2,15 +2,15 @@ import * as React from "react";
 import { isMobile } from "react-device-detect";
 import { HashRouter, Route, Switch } from "react-router-dom";
 import Dashboard from "./components/Dashboard";
-import Lobby from "./components/Lobby";
-import DebugBar from './containers/DebugBarContainer';
+import DebugBar from "./containers/DebugBarContainer";
+import Lobby from "./containers/LobbyContainer";
 import Welcome from "./containers/WelcomeContainer";
 
 class App extends React.Component {
   public render() {
     return (
       <React.Fragment>
-        { process.env.NODE_ENV === 'development' ? <DebugBar /> : null }
+        {process.env.NODE_ENV === "development" ? <DebugBar /> : null}
         <HashRouter>
           {isMobile ? this.mobileRoutes() : this.browserRoutes()}
         </HashRouter>

@@ -21,7 +21,7 @@ const history = createBrowserHistory();
 
 const sagaMiddleware = createSagaMiddleware();
 
-// Prepare the redux stire
+// Prepare the redux store
 const store = createStore(
   rootReducer(history),
   composeWithDevTools(
@@ -33,6 +33,7 @@ const store = createStore(
 const socket = setupSocket(store.dispatch);
 
 sagaMiddleware.run(Sagas.handleCheckRoom, { socket });
+sagaMiddleware.run(Sagas.handleAttemptAuthentication, { socket });
 
 ReactDOM.render(
   <Provider store={store}>

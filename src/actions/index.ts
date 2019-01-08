@@ -27,3 +27,13 @@ export const roomTaken = () => ({
   payload: {},
   type: Types.ROOM_TAKEN
 });
+
+// User Room Auth
+export const attemptAuthentication = (roomName: string, name: string, password: string) => ({
+  payload: {
+    name,
+    password,
+    roomName
+  },
+  type: Types.JOIN_ROOM
+})
